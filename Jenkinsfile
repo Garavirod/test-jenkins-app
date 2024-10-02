@@ -4,8 +4,8 @@ pipeline {
         stage("Build") {
             agent {
                 docker {
-                    image: 'node:18-alpine'
-                    reuseNode: true // For syncronize Workspaces (resue the same)
+                    image 'node:18-alpine'
+                    reuseNode true // For syncronize Workspaces (resue the same)
                 }
             }
             steps{
