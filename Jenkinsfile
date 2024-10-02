@@ -5,7 +5,7 @@ pipeline {
             agent {
                 docker {
                     image 'node:18-alpine'
-                    reuseNode true // For syncronize Workspaces (resue the same)
+                    reuseNode true // For syncronnizyng Workspaces (resue the same)
                 }
             }
             steps{
@@ -16,6 +16,20 @@ pipeline {
                     npm ci
                     npm run build
                     ls -la
+                '''
+            }
+        }
+        stage("Test") {
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                    reuseNode true // For syncronnizyng Workspaces (resue the same)
+                }
+            }
+            steps {
+                sh '''
+                    test -f build/index.html
+                    npm test
                 '''
             }
         }
