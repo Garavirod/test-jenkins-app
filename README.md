@@ -1,6 +1,9 @@
+# What about this project?
+This is a simple web app, and its propose is just to be deployed intto DevOps practices.
+
 # Learn Jenkins App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). 
 
 ## Available Scripts
 
