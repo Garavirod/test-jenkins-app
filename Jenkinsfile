@@ -48,10 +48,10 @@ pipeline {
                         }
                     }
                 }
-            /*     stage("E2E") {
+                stage("E2E") {
                     agent {
                         docker {
-                            image 'node:18-alpine'
+                            image 'mcr.microsoft.com/playwright:v1.47.2-noble'
                             reuseNode true // For syncronnizyng Workspaces (resue the same)
                         }
                     }
@@ -66,10 +66,10 @@ pipeline {
 
                     post {
                         always {
-                            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, KeepAll: false, reportDir: ''])
+                            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles:'index.html', reportName:'Playwright HTML loacl', reportTitiles:'', useWrapperFileDirectly:true])
                         }
                     }
-                } */
+                }
 
             }
         }
@@ -88,6 +88,31 @@ pipeline {
                     node_modules/.bin/netlify status
                     node_modules/.bin/netlify deploy --dir=build --prod
                 '''
+            }
+        }
+
+        stage("Prod E2E") {
+            agent {
+                docker {
+                    image 'mcr.microsoft.com/playwright:v1.47.2-noble'
+                    reuseNode true // For syncronnizyng Workspaces (resue the same)
+                }
+            }
+
+            environment {
+                CI_ENVIRONMENT_URL = 'https://ephemeral-jalebi-87b0ca.netlify.app'
+            }
+
+            steps {
+                sh '''
+                    npx playwright test --reporter=html
+                '''
+            }
+
+            post {
+                always {
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles:'index.html', reportName:'Playwright E2E', reportTitiles:'', useWrapperFileDirectly:true])
+                }
             }
         }
     }
