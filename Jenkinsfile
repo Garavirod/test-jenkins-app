@@ -3,11 +3,6 @@ pipeline {
 
     stages {
         stage('Build') {
-            steps {
-                sh '''
-                   echo "Building application"
-                '''
-            }
             agent {
                 docker {
                     image 'node:22-alpine'
