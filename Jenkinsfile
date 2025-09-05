@@ -1,4 +1,4 @@
-@Library('JJenkinsDockerConfigLib') _
+@Library('JenkinsDockerConfigLib') _
 pipeline {
     agent any
 
