@@ -36,9 +36,7 @@ pipeline {
     }
 }
 
-def nodeDocker = {
-    docker {
-        image 'node:22-alpine'
-        reuseNode true
-    }
-}
+def nodeDocker = [
+    image: 'node:22-alpine',
+    reuseNode: true   
+]
