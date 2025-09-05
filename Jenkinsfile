@@ -20,8 +20,10 @@ pipeline {
             }
         }
         stage('Test') {
-            steps {
+            agent {
                 docker dockerConfig.nodeJs()
+            }
+            steps {
                 sh '''
                    test -f build/index.html
                    npm test
@@ -30,8 +32,3 @@ pipeline {
         }
     }
 }
-
-def nodeDocker = [
-    image: 'node:22-alpine',
-    reuseNode: true   
-]
