@@ -1,10 +1,11 @@
+@Library('JJenkinsDockerConfigLib') _
 pipeline {
     agent any
 
     stages {
         stage('Build') {
             agent {
-                docker nodeDocker
+                docker dockerConfig.nodeJs()
             }
             steps {
                 sh '''
@@ -19,14 +20,8 @@ pipeline {
             }
         }
         stage('Test') {
-            agent {
-                docker nodeDocker
-            }
             steps {
-                docker {
-                    image 'node:22-alpine'
-                    reuseNode true
-                }
+                docker dockerConfig.nodeJs()
                 sh '''
                    test -f build/index.html
                    npm test
